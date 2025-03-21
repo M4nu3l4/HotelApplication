@@ -23,11 +23,8 @@ namespace HotelApplication.Data
             modelBuilder.Entity<MobileBarItem>().Property(mb => mb.Prezzo).HasPrecision(10, 2);
             modelBuilder.Entity<Prenotazione>().Property(p => p.ImportoTotale).HasPrecision(10, 2);
 
-            modelBuilder.Entity<CameraMobileBar>()
-                .HasKey(cmb => new { cmb.CameraId, cmb.MobileBarItemId });
-
-            modelBuilder.Entity<PrenotazioneMobileBar>()
-                .HasKey(pmb => new { pmb.PrenotazioneId, pmb.MobileBarItemId });
+            modelBuilder.Entity<CameraMobileBar>().HasKey(cmb => new { cmb.CameraId, cmb.MobileBarItemId });
+            modelBuilder.Entity<PrenotazioneMobileBar>().HasKey(pmb => new { pmb.PrenotazioneId, pmb.MobileBarItemId });
         }
     }
 }

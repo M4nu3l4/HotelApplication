@@ -1,8 +1,11 @@
 ﻿
+using System.ComponentModel.DataAnnotations;
+
 namespace HotelApplication.Models
 {
     public class Prenotazione
     {
+        [Key]
         public int PrenotazioneId { get; set; }
         public int ClienteId { get; set; }
         public required Cliente Cliente { get; set; }

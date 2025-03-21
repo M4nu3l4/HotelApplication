@@ -61,18 +61,29 @@ namespace HotelApplication.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PrenotazioneId,ClienteId,CameraId,DataInizio,DataFine,Stato,Fumatore,ImportoTotale,DipendenteId")] Prenotazione prenotazione)
+        public async Task<IActionResult> Create(Prenotazione prenotazione)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                _context.Add(prenotazione);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                var errors = ModelState.Values.SelectMany(v => v.Errors);
+                foreach (var error in errors)
+                {
+                    Console.WriteLine(error.ErrorMessage); // Stampa gli errori nella console di Visual Studio
+                }
+                return View(prenotazione);
             }
-            ViewData["CameraId"] = new SelectList(_context.Camere, "CameraId", "CameraId", prenotazione.CameraId);
-            ViewData["ClienteId"] = new SelectList(_context.Clienti, "ClienteId", "ClienteId", prenotazione.ClienteId);
-            ViewData["DipendenteId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id", prenotazione.DipendenteId);
-            return View(prenotazione);
+
+            try
+            {
+                _context.Prenotazioni.Add(prenotazione);
+                await _context.SaveChangesAsync(); // Salva i dati nel database
+                return RedirectToAction("Index"); // Torna alla lista delle prenotazioni
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Errore durante il salvataggio: {ex.Message}");
+                return View(prenotazione);
+            }
         }
 
         // GET: Prenotazioni/Edit/5

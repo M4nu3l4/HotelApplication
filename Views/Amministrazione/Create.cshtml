@@ -1,0 +1,31 @@
+﻿@model HotelApplication.Models.Prenotazione
+
+<h2>Aggiungi Prenotazione</h2>
+
+<form asp-action="Create" method="post">
+    @Html.AntiForgeryToken()
+
+    <label>Cliente ID</label>
+    <input asp-for="ClienteId" class="form-control" required />
+
+    <label>Camera ID</label>
+    <input asp-for="CameraId" class="form-control" required />
+
+    <label>Data Inizio</label>
+    <input asp-for="DataInizio" type="date" class="form-control" required />
+
+    <label>Data Fine</label>
+    <input asp-for="DataFine" type="date" class="form-control" required />
+
+    <label>Importo Totale</label>
+    <input asp-for="ImportoTotale" type="number" class="form-control" required />
+
+    <button type="submit" class="btn btn-primary">Salva</button>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
