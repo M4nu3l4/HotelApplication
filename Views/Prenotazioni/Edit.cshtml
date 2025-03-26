@@ -10,7 +10,9 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form asp-controller="/prenotazioni/modifica" asp-action="Edit" method="post">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="PrenotazioneId" />
             <div class="form-group">
@@ -34,10 +36,13 @@
                 <span asp-validation-for="DataFine" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Stato" class="control-label"></label>
-                <input asp-for="Stato" class="form-control" />
-                <span asp-validation-for="Stato" class="text-danger"></span>
-            </div>
+                <label class="control-label text-white">Disponibile</label>
+                <div class="form-check">
+                    <input asp-for="StatoDisponibile" class="form-check-input" type="checkbox" /> @Html.DisplayNameFor(model => model.StatoDisponibile)
+                    <label class="form-check-label text-white" asp-for="StatoDisponibile">Sì</label>
+                </div>
+                <span asp-validation-for="StatoDisponibile" class="text-danger"></span>
+            </div> 
             <div class="form-group form-check">
                 <label class="form-check-label">
                     <input class="form-check-input" asp-for="Fumatore" /> @Html.DisplayNameFor(model => model.Fumatore)

@@ -4,6 +4,7 @@ using HotelApplication.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HotelApplication.Migrations
 {
     [DbContext(typeof(HotelApplicationContext))]
-    partial class HotelApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20250323210739_AggiuntaPrenotazioni")]
+    partial class AggiuntaPrenotazioni
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -241,8 +244,8 @@ namespace HotelApplication.Migrations
                         .HasPrecision(10, 2)
                         .HasColumnType("decimal(10,2)");
 
-                    b.Property<bool>("StatoDisponibile")
-                        .HasColumnType("bit");
+                    b.Property<string>("Stato")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("PrenotazioneId");
 
@@ -460,7 +463,7 @@ namespace HotelApplication.Migrations
                         .IsRequired();
 
                     b.HasOne("HotelApplication.Models.Prenotazione", "Prenotazione")
-                        .WithMany()
+                        .WithMany("MobileBarItems")
                         .HasForeignKey("PrenotazioneId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -538,6 +541,11 @@ namespace HotelApplication.Migrations
                     b.Navigation("Camere");
 
                     b.Navigation("Prenotazioni");
+                });
+
+            modelBuilder.Entity("HotelApplication.Models.Prenotazione", b =>
+                {
+                    b.Navigation("MobileBarItems");
                 });
 #pragma warning restore 612, 618
         }

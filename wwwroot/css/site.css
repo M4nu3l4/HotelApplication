@@ -22,6 +22,7 @@ body {
     background-color: #121212;
     color: #ffffff;
     font-family: 'Segoe UI', sans-serif;
+    padding-bottom: 80px;
 }
 
 .card {
@@ -39,3 +40,13 @@ body {
     .btn-primary:hover {
         background-color: #3a6edc;
     }
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #111;
+    padding: 10px;
+    color: white;
+    text-align: center;
+    z-index: 1000;
+}

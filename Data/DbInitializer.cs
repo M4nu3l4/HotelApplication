@@ -25,7 +25,8 @@ namespace HotelApplication.Data
             foreach (var userInfo in users)
             {
                 var user = new ApplicationUser { UserName = userInfo.UserName, Email = userInfo.Email, EmailConfirmed = true };
-                if (userManager.Users.All(u => u.UserName != user.UserName))
+                if (userManager.Users.All(u => u.Email != user.Email))
+
                 {
                     var result = await userManager.CreateAsync(user, userInfo.Password);
                     if (result.Succeeded)
@@ -36,10 +37,13 @@ namespace HotelApplication.Data
             }
         }
 
-        internal static async Task SeedRolesAndUsersAsync(IServiceProvider services)
+        internal static async Task SeedRolesAndUsers(IServiceProvider services)
         {
-            throw new NotImplementedException();
+            var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+            var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
+            await SeedRolesAndUsersAsync(roleManager, userManager);
         }
+
     }
 }
 

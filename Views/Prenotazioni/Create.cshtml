@@ -1,65 +1,84 @@
 @model HotelApplication.Models.Prenotazione
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Modifica Prenotazione";
 }
 
-<h1>Create</h1>
+<h2 class="text-white mt-4 mb-4">Modifica Prenotazione</h2>
 
-<h4>Prenotazione</h4>
-<hr />
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="col-md-6">
+        <form asp-action="Edit" asp-controller="Amministrazione" method="post">
+            @Html.AntiForgeryToken()
+            <input type="hidden" asp-for="PrenotazioneId" />
+
             <div class="form-group">
-                <label asp-for="ClienteId" class="control-label"></label>
-                <select asp-for="ClienteId" class ="form-control" asp-items="ViewBag.ClienteId"></select>
+                <label asp-for="ClienteId" class="control-label text-white"></label>
+                <select asp-for="ClienteId" class="form-control" asp-items="ViewBag.ClienteId">
+                    <option value="">-- Seleziona Cliente --</option>
+                </select>
+                <span asp-validation-for="ClienteId" class="text-danger"></span>
             </div>
+
             <div class="form-group">
-                <label asp-for="CameraId" class="control-label"></label>
-                <select asp-for="CameraId" class ="form-control" asp-items="ViewBag.CameraId"></select>
+                <label asp-for="CameraId" class="control-label text-white"></label>
+                <select asp-for="CameraId" class="form-control" asp-items="ViewBag.CameraId">
+                    <option value="">-- Seleziona Camera --</option>
+                </select>
+                <span asp-validation-for="CameraId" class="text-danger"></span>
             </div>
+
             <div class="form-group">
-                <label asp-for="DataInizio" class="control-label"></label>
-                <input asp-for="DataInizio" class="form-control" />
+                <label asp-for="DataInizio" class="control-label text-white"></label>
+                <input asp-for="DataInizio" type="date" class="form-control" />
                 <span asp-validation-for="DataInizio" class="text-danger"></span>
             </div>
+
             <div class="form-group">
-                <label asp-for="DataFine" class="control-label"></label>
-                <input asp-for="DataFine" class="form-control" />
+                <label asp-for="DataFine" class="control-label text-white"></label>
+                <input asp-for="DataFine" type="date" class="form-control" />
                 <span asp-validation-for="DataFine" class="text-danger"></span>
             </div>
+
             <div class="form-group">
-                <label asp-for="Stato" class="control-label"></label>
-                <input asp-for="Stato" class="form-control" />
-                <span asp-validation-for="Stato" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Fumatore" /> @Html.DisplayNameFor(model => model.Fumatore)
-                </label>
-            </div>
-            <div class="form-group">
-                <label asp-for="ImportoTotale" class="control-label"></label>
-                <input asp-for="ImportoTotale" class="form-control" />
+                <label asp-for="ImportoTotale" class="control-label text-white"></label>
+                <input asp-for="ImportoTotale" type="number" class="form-control" step="0.01" />
                 <span asp-validation-for="ImportoTotale" class="text-danger"></span>
             </div>
+
             <div class="form-group">
-                <label asp-for="DipendenteId" class="control-label"></label>
-                <select asp-for="DipendenteId" class ="form-control" asp-items="ViewBag.DipendenteId"></select>
+                <label asp-for="StatoDisponibile" class="control-label text-white"></label>
+                <input asp-for="StatoDisponibile" class="form-control" />
+                <span asp-validation-for="StatoDisponibile" class="text-danger"></span>
             </div>
+
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <label class="control-label text-white">Fumatore</label>
+                <div class="form-check">
+                    <input asp-for="Fumatore" class="form-check-input" type="checkbox" />
+                    <label class="form-check-label text-white" asp-for="Fumatore">Sì</label>
+                </div>
+                <span asp-validation-for="Fumatore" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="DipendenteId" class="control-label text-white"></label>
+                <select asp-for="DipendenteId" class="form-control" asp-items="ViewBag.DipendenteId">
+                    <option value="">-- Seleziona Dipendente --</option>
+                </select>
+                <span asp-validation-for="DipendenteId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mt-3">
+                <button type="submit" class="btn btn-warning">Salva Modifiche</button>
+                <a asp-action="Index" class="btn btn-secondary">Annulla</a>
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

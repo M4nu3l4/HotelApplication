@@ -1,77 +1,69 @@
 @model IEnumerable<HotelApplication.Models.Prenotazione>
-
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<ApplicationUser> UserManager
+@inject SignInManager<ApplicationUser> SignInManager
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Prenotazioni";
+    decimal totale = ViewBag.ImportoTotale != null ? (decimal)ViewBag.ImportoTotale : 0;
+    decimal commissione = ViewBag.CommissioneDipendente != null ? (decimal)ViewBag.CommissioneDipendente : 0;
 }
 
-<h1>Index</h1>
+<h2>Elenco Prenotazioni</h2>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
+<table class="table table-striped table-bordered bg-light text-dark">
+
+    <thead class="thead-dark">
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Cliente)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Camera)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DataInizio)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DataFine)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Stato)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Fumatore)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ImportoTotale)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Dipendente)
-            </th>
-            <th></th>
+            <th>Cliente</th>
+            <th>Camera</th>
+            <th>Check-in</th>
+            <th>Check-out</th>
+            <th>Fumatore</th>
+            <th>Mezza Pensione</th>
+            <th>Pensione Completa</th>
+            <th>Disabile</th>
+            <th>Importo Totale</th>
+            <th>Commissione 10%</th>
+            <th>Dipendente</th>
+            <th>Azioni</th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Cliente.ClienteId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Camera.CameraId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DataInizio)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DataFine)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Stato)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Fumatore)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ImportoTotale)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Dipendente.Id)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.PrenotazioneId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.PrenotazioneId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.PrenotazioneId">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var p in Model)
+        {
+            var sconto = p.Cliente.Disabile ? p.ImportoTotale * 0.10m : 0;
+            var importoScontato = p.ImportoTotale - sconto;
+            var commissioneDipendente = importoScontato * 0.10m;
+
+            <tr>
+                <td>@(p.Cliente.Nome) @(p.Cliente.Cognome)</td>
+                <td>@p.Camera.Numero - @p.Camera.Tipo</td>
+                <td>@p.DataInizio.ToShortDateString()</td>
+                <td>@p.DataFine.ToShortDateString()</td>
+                <td>@(p.Fumatore ? "Sì" : "No")</td>
+                <td>@(p.Camera.MezzaPensione ? "Sì" : "No")</td>
+                <td>@(p.Camera.PensioneCompleta ? "Sì" : "No")</td>
+                <td>@(p.Cliente.Disabile ? "Sì (10% sconto)" : "No")</td>
+                <td>@importoScontato.ToString("C")</td>
+                <td>@commissioneDipendente.ToString("C")</td>
+                <td>@p.Dipendente.Email</td>
+                @if (User.IsInRole("AddettoPrenotazioni"))
+                {
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@p.PrenotazioneId" class="btn btn-sm btn-warning">Modifica</a>
+                        <a asp-action="Delete" asp-route-id="@p.PrenotazioneId" class="btn btn-sm btn-danger">Elimina</a>
+                    </td>
+                }
+                else
+                {
+                    <td>-</td>
+                }
+            </tr>
+        }
     </tbody>
 </table>
+
+<div class="alert alert-info mt-4">
+    <strong>Totale Prenotazioni (con sconti disabili):</strong> @totale.ToString("C")<br />
+    <strong>Commissioni Totali Dipendenti (10%):</strong> @commissione.ToString("C")
+</div>

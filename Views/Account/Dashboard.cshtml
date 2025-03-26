@@ -1,0 +1,27 @@
+﻿@model IEnumerable<HotelApplication.Models.ApplicationUser>
+@{
+    ViewData["Title"] = "Dashboard Amministratore";
+}
+
+<h2 class="mb-4">Gestione Utenti</h2>
+
+<p>Benvenuto nell'area amministrativa. Qui potrai gestire utenti, ruoli e autorizzazioni.</p>
+
+<h2>Dashboard Amministratore</h2>
+<p>Benvenuto nella dashboard di amministrazione. Da qui puoi:</p>
+<ul>
+    <li><a asp-controller="Account" asp-action="ListaDipendenti">Gestire gli utenti</a></li>
+</ul>
+
+<div class="card mt-4">
+    <div class="card-body">
+        <h5 class="card-title">Funzionalità disponibili:</h5>
+        <ul>
+            <li>Visualizza tutti gli utenti registrati</li>
+            <li>Assegna ruoli agli utenti</li>
+            <li>Rimuovi utenti o aggiorna credenziali</li>
+        </ul>                       
+    </div>
+</div>
+
+<a class="btn btn-secondary mt-3" asp-controller="Home" asp-action="Index">Torna alla Home</a>

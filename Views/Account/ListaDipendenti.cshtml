@@ -1,0 +1,42 @@
+﻿@model IEnumerable<HotelApplication.Models.ApplicationUser>
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.Extensions
+@{
+    ViewData["Title"] = "Lista Dipendenti";
+}
+
+<h2>Utenti Registrati</h2>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Email</th>
+            <th>Ruoli</th>
+            <th>Azioni</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var utente in Model)
+        {
+            <tr>
+                <td>@utente.Email</td>
+                <td>
+                    @if (ViewBag.UserRoles != null && ViewBag.UserRoles[utente.Id] != null)
+                    {
+                        foreach (var ruolo in ViewBag.UserRoles[utente.Id] as List<string>)
+                        {
+                            <span class="badge bg-primary me-1">@ruolo</span>
+                        }
+                    }
+                    else
+                    {
+                        <span class="text-muted">Nessun ruolo</span>
+                    }
+                </td>
+                <td>
+                    <a asp-controller="Account" asp-action="GestisciRuoli" asp-route-id="@utente.Id" class="btn btn-sm btn-primary">Gestisci Ruoli</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

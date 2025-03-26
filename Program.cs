@@ -9,16 +9,16 @@ internal class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
-        // Configurazione del database
+        
         builder.Services.AddDbContext<HotelApplicationContext>(options =>
             options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-        // Configurazione Identity
+        
         builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
             .AddEntityFrameworkStores<HotelApplicationContext>()
             .AddDefaultTokenProviders();
 
-        // Configurazione dei cookie per l'autenticazione
+        
         builder.Services.ConfigureApplicationCookie(options =>
         {
             options.LoginPath = "/Account/Login";
@@ -29,7 +29,6 @@ internal class Program
 
         var app = builder.Build();
 
-        // Seeding automatico degli utenti e ruoli
         using (var scope = app.Services.CreateScope())
         {
             var services = scope.ServiceProvider;
@@ -47,7 +46,6 @@ internal class Program
             }
         }
 
-        // Configurazione di middleware e rotte
         if (!app.Environment.IsDevelopment())
         {
             app.UseExceptionHandler("/Home/Error");
@@ -61,8 +59,19 @@ internal class Program
         app.UseAuthorization();
 
         app.MapControllerRoute(
-     name: "default",
-     pattern: "{controller=Home}/{action=Index}/{id?}");
+              name: "default",
+              pattern: "{controller=Home}/{action=Index}/{id?}");
+
+        //app.MapControllerRoute(
+        //    name: "prenotazioni",
+        //    pattern: "Prenotazioni/{action=Index}/{id?}",
+        //    defaults: new { controller = "Prenotazioni" });
+
+        //app.MapControllerRoute(
+        //    name: "account",
+        //    pattern: "Account/{action=Login}/{id?}",
+        //    defaults: new { controller = "Account" });
+
 
 
 

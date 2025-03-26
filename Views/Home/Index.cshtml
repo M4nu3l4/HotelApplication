@@ -2,33 +2,36 @@
     ViewData["Title"] = "Home";
 }
 
-<div class="container mt-5">
-    <div class="row">
-        <div class="col-md-4">
-            <div class="card text-white bg-dark">
-                <div class="card-body">
-                    <h5 class="card-title">Gestione Prenotazioni</h5>
-                    <p class="card-text">Accedi al modulo per gestire le prenotazioni dei clienti.</p>
-                    <a href="/Prenotazioni" class="btn btn-primary">Vai</a>
-                </div>
+<h2 class="text-center">Benvenuto in Hotel Management</h2>
+<p class="text-center">Seleziona una sezione per accedere</p>
+
+<div class="row text-center">
+    <div class="col-md-4">
+        <div class="card bg-dark text-white mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Gestione Prenotazioni</h5>
+                <p class="card-text">Accedi come Addetto Prenotazioni</p>
+                <a href="/Account/Login?returnUrl=/Prenotazioni" class="btn btn-outline-light">Area Prenotazioni</a>
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="card text-white bg-dark">
-                <div class="card-body">
-                    <h5 class="card-title">Gestione Amministrativa</h5>
-                    <p class="card-text">Monitoraggio pagamenti e percentuale incassi.</p>
-                    <a href="/Amministrazione" class="btn btn-primary">Vai</a>
-                </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card bg-dark text-white mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Area Amministrativa</h5>
+                <p class="card-text">Visualizza le prenotazioni e gestisci sconti e commissioni</p>
+                <a href="/Account/Login?returnUrl=/Amministrazione" class="btn btn-outline-light">Vai</a>
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="card text-white bg-dark">
-                <div class="card-body">
-                    <h5 class="card-title">Gestione Account</h5>
-                    <p class="card-text">Gestisci gli account e i ruoli dei dipendenti.</p>
-                    <a href="/Account" class="btn btn-primary">Vai</a>
-                </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card bg-dark text-white mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Gestione Account</h5>
+                <p class="card-text">Visualizza, registra o modifica utenti e ruoli</p>
+                <a href="/Account/Login?returnUrl=/Account/Dashboard" class="btn btn-outline-light">Vai</a>
             </div>
         </div>
     </div>

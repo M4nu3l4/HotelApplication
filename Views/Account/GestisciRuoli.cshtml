@@ -1,0 +1,25 @@
+﻿@{
+    ViewData["Title"] = "Gestione Ruoli";
+    var ruoli = ViewBag.AllRoles as List<string>;
+    var ruoliUtente = ViewBag.UserRoles as IList<string>;
+}
+<h2>Gestione Ruoli per @ViewBag.UserEmail</h2>
+
+<form asp-action="GestisciRuoli" method="post">
+    <input type="hidden" name="id" value="@ViewBag.UserId" />
+
+    <div class="form-group">
+        <label>Ruoli disponibili:</label><br />
+        @foreach (var ruolo in ruoli)
+        {
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" name="ruoliSelezionati" value="@ruolo"
+                @(ruoliUtente.Contains(ruolo) ? "checked" : "") />
+                <label class="form-check-label">@ruolo</label>
+            </div>
+        }
+    </div>
+
+    <button type="submit" class="btn btn-primary">Salva Ruoli</button>
+    <a asp-action="ListaUtenti" asp-controller="Account" class="btn btn-secondary">Annulla</a>
+</form>
